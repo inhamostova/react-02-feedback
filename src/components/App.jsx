@@ -13,12 +13,9 @@ export class App extends Component {
     bad: 0,
   };
 
-  clickHandler = evt => {
-    const option = evt.target.textContent;
-
+  clickHandler = option => {
     this.setState(prevState => ({
-      ...prevState,
-      [option]: (prevState[option] ?? 0) + 1,
+      [option]: prevState[option] + 1,
     }));
   };
 
@@ -29,11 +26,9 @@ export class App extends Component {
   };
 
   countPositiveFeedbackPercentage = () => {
-    const { good, neutral } = this.state;
+    const { good } = this.state;
 
-    return (
-      (((good + neutral) / this.countTotalFeedback()) * 100).toFixed(1) + '%'
-    );
+    return ((good / this.countTotalFeedback()) * 100).toFixed(1) + '%';
   };
 
   render() {
@@ -46,11 +41,11 @@ export class App extends Component {
 
     return (
       <div style={{ paddingLeft: '20px' }}>
-        <Section title={'Please leave feedback'}>
+        <Section title="Please leave feedback">
           <FeedbackOptions options={OPTIONS} onLeaveFeedback={clickHandler} />
         </Section>
 
-        <Section title={'Statistics'}>
+        <Section title="Statistics">
           {countTotalFeedback() ? (
             <Statistics
               good={good}
@@ -60,7 +55,7 @@ export class App extends Component {
               positivePercentage={countPositiveFeedbackPercentage()}
             />
           ) : (
-            <Notification message={'There is no feedback'} />
+            <Notification message="There is no feedback" />
           )}
         </Section>
       </div>
